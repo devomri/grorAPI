@@ -1,0 +1,22 @@
+{
+  "name": "gror_api",
+  "version": "1.0.0",
+  "description": "GrOr API",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/devomri/grorAPI.git"
+  },
+  "author": "Gror Team",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/devomri/grorAPI/issues"
+  },
+  "homepage": "https://github.com/devomri/grorAPI#readme",
+  "dependencies": {
+    "express": "^4.14.0"
+  }
+}
