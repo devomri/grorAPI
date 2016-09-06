@@ -1,14 +1,10 @@
-/**
- * Created by omri on 9/1/16.
- */
+import express from 'express';
+import restaurants from './routes/restaurants';
 
-const express = require('express');
 const app = express();
 
-const restaurants = require('./routes/restaurants');
-
 app.get('/', (req, res) => {
-    res.send('Working');
+    res.send('Working with hot reload 123');
 });
 
 app.use('/restaurants', restaurants);
