@@ -1,13 +1,20 @@
 import express from 'express';
-import restaurants from './routes/restaurants';
-
+import routes from './routes';
 const app = express();
 
-app.get('/', (req, res) => {
-    res.send('Working with hot reload 123');
+// Middleware
+express.Router().use((req, res, next) => {
+  //Authentication middleware
+  next();
 });
 
-app.use('/restaurants', restaurants);
+app.get('/', (req, res) => {
+    res.send('Working');
+});
+
+Object.keys(routes).forEach((routeName) => {
+  app.use(`/${routeName}`, routes[routeName]);
+});
 
 app.listen(3000, () => {
    console.log('Gror API listening on port 3000');

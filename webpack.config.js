@@ -9,9 +9,7 @@ var nodeModules = fs.readdirSync('node_modules').filter((x) => ['.bin'].indexOf(
   }, {});
 
 module.exports = {
-  entry: [
-    './src'
-  ],
+  entry: './src',
   target: 'node',
   output: {
     path: 'dist',
@@ -28,7 +26,7 @@ module.exports = {
     ]
   },
   plugins: [
-    new CleanPlugin(['dist']),
+    new CleanPlugin(['dist'])
   ],
   externals: nodeModules
 };
