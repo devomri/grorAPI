@@ -1,4 +1,6 @@
 import express from 'express';
+import restaurantDAL from '../DAL/restaurantDAL';
+
 const router = express.Router();
 
 router.get('/', (req, res) => {
@@ -14,9 +16,9 @@ router.get('/', (req, res) => {
 
 // Get restaurant by ID
 router.get('/id/:id', (req, res) => {
-  res.send({
-    restaurant: req.params.id
-  });
+    res.send({
+        restaurant: req.params.id
+    });
 });
 
 // Search restaurant bt name

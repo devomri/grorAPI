@@ -1,7 +1,9 @@
-import Base from './base';
+import mongoose from 'mongoose';
 
-export default class Restaurant extends Base {
-  constructor(){
-    super();
-  }
-}
+const restaurantSchema = new mongoose.Schema({
+    name: String
+});
+
+const Restaurant = mongoose.model('Restaurant', restaurantSchema);
+
+export default Restaurant;
