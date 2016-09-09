@@ -1,0 +1,45 @@
+// mongoDB initialization script
+
+use gror;
+
+db.createCollection('users');
+db.createCollection('organizations');
+db.createCollection('restaurants');
+db.createCollection('restaurantFeedback');
+db.createCollection('menus');
+db.createCollection('categories');
+db.createCollection('purchases');
+
+// ** Initialization data **
+
+// Restaurants
+db.restaurants.insert({
+    id: "44085169-b327-4314-b08d-4600d4077f25",
+    name: "River",
+    phoneNumber: "03-9658741",
+    location: "Tel-Aviv",
+    minimumOrderPrice: 50,
+    minimumSalePrice: 100
+});
+
+db.restaurants.insert({
+    id: "0a87d86a-ec20-4a1c-b676-c08b5b17e90d",
+    name: "Pizza Hut",
+    phoneNumber: "03-9654714",
+    location: "Tel-Aviv",
+    minimumOrderPrice: 40,
+    minimumSalePrice: 80
+});
+
+db.restaurants.insert({
+    id: "a70c372d-a9bc-45ae-98ba-f623166c91cc",
+    name: "Shawarma Hertzel",
+    phoneNumber: "03-9687354",
+    location: "Tel-Aviv",
+    minimumOrderPrice: 40,
+    minimumSalePrice: 999
+});
+
+// Feedbacks
+db.restaurantFeedback.insert({
+});
