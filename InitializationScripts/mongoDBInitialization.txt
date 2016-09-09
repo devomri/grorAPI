@@ -7,7 +7,6 @@ db.createCollection('organizations');
 db.createCollection('restaurants');
 db.createCollection('restaurantFeedback');
 db.createCollection('menus');
-db.createCollection('categories');
 db.createCollection('purchases');
 
 // ** Initialization data **
