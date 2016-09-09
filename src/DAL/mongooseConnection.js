@@ -1,18 +1,18 @@
 import mongoose from 'mongoose';
+import loggerUtil from '../utils/loggerUtil';
+import config from '../configuration/config';
 
-const mongoDBUrl = "localhost";
-const databaseName = "gror";
-const connectionUrl = `mongodb://${mongoDBUrl}/${databaseName}`;
+const connectionUrl = `mongodb://${config.mongo.address}/${config.mongo.databaseName}`;
 
 // ** Connection events **
 // Successfully connected
 mongoose.connection.on('connected', () => {
-    console.log(`Mongoose is connected to ${connectionUrl}`);
+    loggerUtil.logInformation(`Mongoose is connected to ${connectionUrl}`);
 });
 
 // Connection Problem
 mongoose.connection.on('error', (error) => {
-    console.log(`Mongoose connection error: ${error}`);
+    loggerUtil.logInformation(`Mongoose connection error: ${error}`);
 });
 
 

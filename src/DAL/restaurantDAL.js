@@ -1,30 +1,29 @@
 import Restaurant from '../model/restaurant';
 import loggerUtil from '../utils/loggerUtil';
 
-const createNewRestaurant = (resName) => {
+function createNewRestaurant(resName) {
     let res1 = new Restaurant({
         name: resName
     });
 
     res1.save((err) => {
         if (err)
-            console.log(err);
-
-        console.log('Saved successfuly');
+            loggerUtil.logError(err);
     });
-};
+}
 
-const getRestaurantById = (restaurantId, callback) => {
-  Restaurant.find({id: restaurantId}, (err, restaurantResult) => {
-      if (err) {
-          console.log("Err");
+function getRestaurantById(restaurantId, callback) {
+    Restaurant.find({id: restaurantId}, (err, restaurantResult) => {
+        if (err) {
+            loggerUtil.logError(`While retrieving restaurant ${restaurantId} encoutered
+                                error ${err}`);
+        }
 
-          return 'Restaurant not found';
-      }
+        loggerUtil.logDebug(`got res id: ${restaurantId}`);
 
-      callback(restaurantResult);
-  })
-};
+        callback(restaurantResult);
+    })
+}
 
 module.exports.createNewRestaurant = createNewRestaurant;
 module.exports.getRestaurantById = getRestaurantById;

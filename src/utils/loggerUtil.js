@@ -8,7 +8,7 @@ const logTypes = {
     DEBUG: 2
 };
 
-const logMessage = (type, message) => {
+function logMessage(type, message) {
     var datePrefix = `${dateUtil.getDateTimeString()}`;
 
     switch (type){
@@ -31,19 +31,19 @@ const logMessage = (type, message) => {
             console.log(`${datePrefix} - Log: ${message}`);
         }
     }
-};
+}
 
-const logError = (message) => {
+function logError(message) {
     logMessage(logTypes.ERROR, message);
-};
+}
 
-const logInformation = (message) => {
+function logInformation(message) {
     logMessage(logTypes.INFORMATION, message);
-};
+}
 
-const logDebug = (message) => {
+function logDebug(message) {
     logMessage(logTypes.DEBUG, message);
-};
+}
 
 module.exports.logError = logError;
 module.exports.logInformation = logInformation;
