@@ -1,4 +1,5 @@
 import Restaurant from '../model/restaurant';
+import Menu from '../model/menu';
 import loggerUtil from '../utils/loggerUtil';
 
 function createNewRestaurant(resName) {
@@ -13,17 +14,29 @@ function createNewRestaurant(resName) {
 }
 
 function getRestaurantById(restaurantId, callback) {
+    var fullRestaurantData = {};
+
     Restaurant.find({id: restaurantId}, (err, restaurantResult) => {
         if (err) {
-            loggerUtil.logError(`While retrieving restaurant ${restaurantId} encoutered
+            loggerUtil.logError(`While retrieving restaurant ${restaurantId} encountered
                                 error ${err}`);
         }
 
-        loggerUtil.logDebug(`got res id: ${restaurantId}`);
+        fullRestaurantData.basicData = restaurantResult;
 
-        callback(restaurantResult);
+        Menu.find({restaurantId: restaurantId}, (err, menuResult) => {
+            if (err) {
+                loggerUtil.logError(`While retrieving restaurant menu of ${restaurantId} encountered
+                                error ${err}`);
+            }
+
+            fullRestaurantData.menu = menuResult;
+
+            callback(fullRestaurantData);
+        });
     })
 }
+
 
 module.exports.createNewRestaurant = createNewRestaurant;
 module.exports.getRestaurantById = getRestaurantById;
