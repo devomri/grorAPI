@@ -1,6 +1,7 @@
 import async from 'async';
 import Restaurant from '../model/restaurant';
 import Menu from '../model/menu';
+import Feedback from '../model/feedback'
 import loggerUtil from '../utils/loggerUtil';
 
 function createNewRestaurant(resName) {
@@ -29,6 +30,14 @@ function getRestaurantFullDataById(restaurantId, finalCallback) {
         (callback) => {
             Menu.find({restaurantId: restaurantId}, (err, menuResult) => {
                 fullRestaurantData.manu = menuResult;
+                callback(err);
+            });
+        },
+        // Restaurant's feedbacks
+        (callback) => {
+            Feedback.find({}, (err, feedbacks) => {
+                loggerUtil.logDebug(`feedbacks: ${feedbacks}`);
+                fullRestaurantData.feedbacks = feedbacks;
                 callback(err);
             });
         }

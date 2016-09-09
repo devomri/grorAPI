@@ -1,11 +1,15 @@
 // mongoDB initialization script
 
+// Delete the previous version
+use gror;
+db.dropDatabase();
+
 use gror;
 
 db.createCollection('users');
 db.createCollection('organizations');
 db.createCollection('restaurants');
-db.createCollection('restaurantFeedback');
+db.createCollection('restaurantFeedbacks');
 db.createCollection('menus');
 db.createCollection('purchases');
 
@@ -90,5 +94,20 @@ db.menus.insert({
 });
 
 // Feedbacks
-db.restaurantFeedback.insert({
+db.feedbacks.insert({
+    id: "5c1901d8-699f-48c0-9676-c74c33312430",
+    restaurantId: "0a87d86a-ec20-4a1c-b676-c08b5b17e90d",
+    userId: "TODO",
+    feedbackDate: new Date(),
+    text: "The best Shawarma in town",
+    rank: 10
+});
+
+db.feedbacks.insert({
+    id: "b4be92d3-720f-415a-b2f8-b69979342e6f",
+    restaurantId: "0a87d86a-ec20-4a1c-b676-c08b5b17e90d",
+    userId: "TODO",
+    feedbackDate: new Date(),
+    text: "Expensive as Manhattan, tastes like Gaza",
+    rank: 1
 });
