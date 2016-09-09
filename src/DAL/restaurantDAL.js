@@ -20,6 +20,8 @@ function getRestaurantById(restaurantId, callback) {
         if (err) {
             loggerUtil.logError(`While retrieving restaurant ${restaurantId} encountered
                                 error ${err}`);
+
+            callback(err);
         }
 
         fullRestaurantData.basicData = restaurantResult;
@@ -32,7 +34,7 @@ function getRestaurantById(restaurantId, callback) {
 
             fullRestaurantData.menu = menuResult;
 
-            callback(fullRestaurantData);
+            callback(null, fullRestaurantData);
         });
     })
 }
