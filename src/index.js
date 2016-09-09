@@ -1,7 +1,8 @@
 import express from 'express';
 import routes from './routes';
 import mongoConnect from './DAL/mongooseConnection';
-import loggerUtil from './Utils/loggerUtil';
+import loggerUtil from './utils/loggerUtil';
+import config from './configuration/config';
 
 mongoConnect();
 
@@ -21,6 +22,6 @@ Object.keys(routes).forEach((routeName) => {
   app.use(`/${routeName}`, routes[routeName]);
 });
 
-app.listen(3000, () => {
-    loggerUtil.logInformation('Gror API listening on port 3000');
+app.listen(config.server.port, () => {
+    loggerUtil.logInformation(`Gror API listening on port ${config.server.port}`);
 });
