@@ -1,0 +1,24 @@
+// Get all users
+GET http://localhost:3000/user/
+
+// Create New user
+POST http://localhost:3000/user/
+{
+    "email": "omri@gmail.com",
+    "password": "1234",
+    "firstName": "Omri",
+    "lastName": "Avrahami",
+    "organizationId": "26d5eac7-a91c-4fae-a254-3bcd4195d854",
+    "phoneNumber": "058-5441225"
+}
+
+// Authenticate User
+PUT http://localhost:3000/user/authenticate
+{
+    "email": "omri@gmail.com",
+    "password": "1234"
+}
+
+// Get all restaurants
+
+// Get full data about restaurant
