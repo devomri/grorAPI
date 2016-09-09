@@ -4,6 +4,34 @@ import Menu from '../model/menu';
 import Feedback from '../model/feedback'
 import loggerUtil from '../utils/loggerUtil';
 
+function getAllRestaurantsPartialData(callback) {
+    Restaurant.find({}, (err, restaurants) => {
+        if (err) {
+            loggerUtil.logError(`Error in getAllRestaurantsPartialData: ${err}`);
+
+            callback(err);
+        }
+
+        callback(null, restaurants);
+    });
+}
+
+function searchRestaurantByName(restaurantName, callback) {
+    Restaurant.find({
+        name: {
+            $regex: new RegExp(restaurantName, "i") // case insensitive
+        }
+    }, (err, restaurantResults) => {
+        if (err) {
+            loggerUtil.logError(`Error in searchRestaurantByName: ${err}`);
+
+            callback(err);
+        }
+
+        callback(null, restaurantResults);
+    },);
+}
+
 function getRestaurantFullDataById(restaurantId, finalCallback) {
     var fullRestaurantData = {};
 
@@ -41,5 +69,6 @@ function getRestaurantFullDataById(restaurantId, finalCallback) {
     });
 }
 
-
+module.exports.getAllRestaurantsPartialData = getAllRestaurantsPartialData;
+module.exports.searchRestaurantByName = searchRestaurantByName;
 module.exports.getRestaurantFullDataById = getRestaurantFullDataById;

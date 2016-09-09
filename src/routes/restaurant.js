@@ -3,16 +3,38 @@ import restaurantDAL from '../DAL/restaurantDAL';
 
 const router = express.Router();
 
+// Get all basic information about all the restaurants
 router.get('/', (req, res) => {
-  res.send([
-    {
-      restaurant: 1
-    },
-    {
-      restaurant: 2
-    }
-  ]);
+
+    restaurantDAL.getAllRestaurantsPartialData((err, restaurants) => {
+       if (err) {
+           res.send({
+               message: err
+           });
+
+           return;
+       }
+
+        res.send(restaurants);
+    });
 });
+
+// Serach restaurants by name (case insensitive)
+router.get('/name/:restaurantName', (req, res) => {
+        restaurantDAL.searchRestaurantByName(req.params.restaurantName,
+         (err, restaurants) => {
+             if (err) {
+                 res.send({
+                     message: err
+                 });
+
+                 return;
+             }
+
+             res.send(restaurants);
+        });
+    }
+);
 
 // Get restaurant by ID
 router.get('/id/:id', (req, res) => {
