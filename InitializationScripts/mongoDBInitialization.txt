@@ -15,6 +15,43 @@ db.createCollection('purchases');
 
 // ** Initialization data **
 
+// Organizations
+db.organizations.insert({
+    id: "26d5eac7-a91c-4fae-a254-3bcd4195d854",
+    name: "IDF",
+    location: "Tel-Aviv",
+    description: "The most important organization is Israel",
+    contacts: [
+        {
+            firstName: "Gadi",
+            lastName: "Eizenkot",
+            jobTitle: "Chief of General Staff",
+            phoneNumber: "050-5412484"
+        },
+        {
+            firstName: "Avigdor",
+            lastName: "Lieberman",
+            jobTitle: " Defense Minister",
+            phoneNumber: "050-6522484"
+        }
+    ]
+});
+
+db.organizations.insert({
+    id: "2636c284-2c02-44e4-af1c-b4133b1a7dfe",
+    name: "Google",
+    location: "Tel-Aviv",
+    description: "Small company in Tel-Aviv,",
+    contacts: [
+        {
+            firstName: "Larry",
+            lastName: "Page",
+            jobTitle: "founder",
+            phoneNumber: "052-5412484"
+        }
+    ]
+});
+
 // Restaurants
 db.restaurants.insert({
     id: "44085169-b327-4314-b08d-4600d4077f25",

@@ -1,5 +1,7 @@
 import restaurant from './restaurant';
+import organization from './organization'
 
 export default {
-  restaurant
+    restaurant,
+    organization
 };

@@ -4,17 +4,6 @@ import Menu from '../model/menu';
 import Feedback from '../model/feedback'
 import loggerUtil from '../utils/loggerUtil';
 
-function createNewRestaurant(resName) {
-    let res1 = new Restaurant({
-        name: resName
-    });
-
-    res1.save((err) => {
-        if (err)
-            loggerUtil.logError(err);
-    });
-}
-
 function getRestaurantFullDataById(restaurantId, finalCallback) {
     var fullRestaurantData = {};
 
@@ -36,7 +25,6 @@ function getRestaurantFullDataById(restaurantId, finalCallback) {
         // Restaurant's feedbacks
         (callback) => {
             Feedback.find({}, (err, feedbacks) => {
-                loggerUtil.logDebug(`feedbacks: ${feedbacks}`);
                 fullRestaurantData.feedbacks = feedbacks;
                 callback(err);
             });
@@ -54,5 +42,4 @@ function getRestaurantFullDataById(restaurantId, finalCallback) {
 }
 
 
-module.exports.createNewRestaurant = createNewRestaurant;
 module.exports.getRestaurantFullDataById = getRestaurantFullDataById;
