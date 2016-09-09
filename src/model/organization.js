@@ -4,8 +4,14 @@ const organizationSchema = new mongoose.Schema({
     id: String,
     name: String,
     location: String,
-    users: [
-        {id: String}
+    description: String,
+    contacts: [
+        {
+            firstName: String,
+            lastName: String,
+            jobTitle: String,
+            phoneNumber: String
+        }
     ]
 });
 

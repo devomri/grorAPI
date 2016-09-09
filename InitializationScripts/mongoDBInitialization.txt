@@ -15,28 +15,78 @@ db.createCollection('purchases');
 db.restaurants.insert({
     id: "44085169-b327-4314-b08d-4600d4077f25",
     name: "River",
-    phoneNumber: "03-9658741",
+    phoneNumber: "03-9854712",
     location: "Tel-Aviv",
     minimumOrderPrice: 50,
-    minimumSalePrice: 100
+    minimumSalePrice: 100,
+    manager: {
+        firstName: "Moshe",
+        lastName: "Cohen",
+        phoneNumber: "054-8554112"
+    }
 });
 
 db.restaurants.insert({
     id: "0a87d86a-ec20-4a1c-b676-c08b5b17e90d",
-    name: "Pizza Hut",
-    phoneNumber: "03-9654714",
+    name: "Shawarma Hertzel",
+    phoneNumber: "03-9885412",
     location: "Tel-Aviv",
-    minimumOrderPrice: 40,
-    minimumSalePrice: 80
+    minimumOrderPrice: 100,
+    minimumSalePrice: 1000,
+    manager: {
+        firstName: "Hertzel",
+        lastName: "Levi",
+        phoneNumber: "054-8554112"
+    }
 });
 
-db.restaurants.insert({
-    id: "a70c372d-a9bc-45ae-98ba-f623166c91cc",
-    name: "Shawarma Hertzel",
-    phoneNumber: "03-9687354",
-    location: "Tel-Aviv",
-    minimumOrderPrice: 40,
-    minimumSalePrice: 999
+// Menus
+db.menus.insert({
+    restaurantId: "44085169-b327-4314-b08d-4600d4077f25", // River
+    items: [
+        {
+            id: "44f6df0a-87ac-4c2a-b14c-2beb77ae6c60",
+            name: "Esh Velehava - Noodles",
+            description: "spicy noodles",
+            price: 60
+        },
+        {
+            id: "dbc4c586-a2f9-4e66-ad8e-d25ce20166be",
+            name: "Sashimi",
+            description: "Tuna shushi",
+            price: 80
+        },
+        {
+            id: "a23c440e-5f2a-4bc0-a781-f4255248f55b",
+            name: "Pad-Tahi",
+            description: "Rice with an egg",
+            price: 30
+        }
+    ]
+});
+
+db.menus.insert({
+    restaurantId: "0a87d86a-ec20-4a1c-b676-c08b5b17e90d", // Shawarma hertzel
+    items: [
+        {
+            id: "421f3f86-fadd-4440-af81-cab3714d7a13",
+            name: "Shawarma in pita",
+            description: "pita cabab",
+            price: 32
+        },
+        {
+            id: "598fd981-1388-46a2-ba52-4c47194d5fe9",
+            name: "Shawarma in lafa",
+            description: "lafa cabab",
+            price: 38
+        },
+        {
+            id: "8cb38ed6-7a14-416a-bfa4-e87c7a5a6c25",
+            name: "Shawarma in a plate",
+            description: "plate cabab",
+            price: 38
+        }
+    ]
 });
 
 // Feedbacks
