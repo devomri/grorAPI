@@ -1,5 +1,9 @@
 import express from 'express';
 import routes from './routes';
+import mongoConnect from './DAL/mongooseConnection';
+
+mongoConnect();
+
 const app = express();
 
 // Middleware

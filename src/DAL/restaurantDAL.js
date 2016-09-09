@@ -1,9 +1,6 @@
-import mongoose from 'mongoose';
 import Restaurant from '../model/restaurant';
 
-mongoose.connect('mongodb://localhost/gror');
-
-function createNewRestaurant(resName) {
+const createNewRestaurant = (resName) => {
     let res1 = new Restaurant({
         name: resName
     });
@@ -14,6 +11,19 @@ function createNewRestaurant(resName) {
 
         console.log('Saved successfuly');
     });
-}
+};
+
+const getRestaurantById = (restaurantId, callback) => {
+  Restaurant.find({id: restaurantId}, (err, restaurantResult) => {
+      if (err) {
+          console.log("Err");
+
+          return 'Restaurant not found';
+      }
+
+      callback(restaurantResult);
+  })
+};
 
 module.exports.createNewRestaurant = createNewRestaurant;
+module.exports.getRestaurantById = getRestaurantById;

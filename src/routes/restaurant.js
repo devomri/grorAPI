@@ -16,8 +16,10 @@ router.get('/', (req, res) => {
 
 // Get restaurant by ID
 router.get('/id/:id', (req, res) => {
-    res.send({
-        restaurant: req.params.id
+    restaurantDAL.getRestaurantById(req.params.id, (restaurantResult) =>{
+        res.send({
+            restaurant: restaurantResult
+        });
     });
 });
 

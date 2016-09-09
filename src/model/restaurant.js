@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
 const restaurantSchema = new mongoose.Schema({
-    id: string,
+    id: String,
     menuId: String,
     name: String,
     phoneNumber: String,
