@@ -3,7 +3,8 @@ import User from '../model/user';
 import loggerUtil from '../utils/loggerUtil';
 
 function getAllUsers(callback) {
-    User.find({}, (err, users) => { // TODO: add projection for password
+    // Mask the password
+    User.find({}, {password: 0} , (err, users) => {
         if (err) {
             loggerUtil.logError(`Error in getAllUsers method: ${err}`);
 

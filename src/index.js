@@ -1,4 +1,5 @@
 import express from 'express';
+import bodyParser from 'body-parser';
 import routes from './routes';
 import mongoConnect from './DAL/mongooseConnection';
 import loggerUtil from './utils/loggerUtil';
@@ -13,6 +14,12 @@ express.Router().use((req, res, next) => {
   //Authentication middleware
   next();
 });
+
+// configure the app to use bodyParser()
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
+app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
     res.send('Working');

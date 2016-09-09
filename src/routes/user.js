@@ -3,6 +3,7 @@ import userDAL from '../DAL/userDAL'
 
 const router = express.Router();
 
+// Get users list
 router.get('/', (req, res) => {
     userDAL.getAllUsers((err, users) => {
         if (err) {
@@ -17,10 +18,23 @@ router.get('/', (req, res) => {
     })
 });
 
+// Create new user
 router.post('/', (req, res) => {
-    res.send({
-        message: `Put new user ${JSON.stringify(req.body)}`
-    });
+    userDAL.insertNewUser(req.body, (err) => {
+        if (err) {
+            res.send({
+                message: `user was not saved: ${err}`
+            });
+
+            return;
+        }
+
+        res.send({
+            message: 'user was saved successfuly'
+        })
+    })
 });
+
+//
 
 export default router;
