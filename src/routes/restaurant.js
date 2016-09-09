@@ -5,7 +5,6 @@ const router = express.Router();
 
 // Get all basic information about all the restaurants
 router.get('/', (req, res) => {
-
     restaurantDAL.getAllRestaurantsPartialData((err, restaurants) => {
        if (err) {
            res.send({
