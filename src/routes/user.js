@@ -35,6 +35,22 @@ router.post('/', (req, res) => {
     })
 });
 
-//
+// Authenticate user
+router.put('/authenticate', (req, res) => {
+    userDAL.authenticateUser(req.body.email, req.body.password, (err, isMatch) => {
+        if (err) {
+            res.send({
+                message: `problem authenticating: ${err}`
+            });
+
+            return;
+        }
+
+        res.send({
+            authenticationStatus: isMatch
+        });
+    });
+});
+
 
 export default router;
