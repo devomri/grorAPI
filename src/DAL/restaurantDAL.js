@@ -1,4 +1,5 @@
 import Restaurant from '../model/restaurant';
+import loggerUtil from '../Utils/loggerUtil';
 
 const createNewRestaurant = (resName) => {
     let res1 = new Restaurant({

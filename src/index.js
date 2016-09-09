@@ -1,6 +1,7 @@
 import express from 'express';
 import routes from './routes';
 import mongoConnect from './DAL/mongooseConnection';
+import loggerUtil from './Utils/loggerUtil';
 
 mongoConnect();
 
@@ -21,5 +22,5 @@ Object.keys(routes).forEach((routeName) => {
 });
 
 app.listen(3000, () => {
-   console.log('Gror API listening on port 3000');
+    loggerUtil.logInformation('Gror API listening on port 3000');
 });
