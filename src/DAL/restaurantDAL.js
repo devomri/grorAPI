@@ -1,3 +1,4 @@
+import async from 'async';
 import Restaurant from '../model/restaurant';
 import Menu from '../model/menu';
 import loggerUtil from '../utils/loggerUtil';
@@ -13,32 +14,36 @@ function createNewRestaurant(resName) {
     });
 }
 
-function getRestaurantById(restaurantId, callback) {
+function getRestaurantFullDataById(restaurantId, finalCallback) {
     var fullRestaurantData = {};
 
-    Restaurant.find({id: restaurantId}, (err, restaurantResult) => {
+    async.parallel([
+        // Restaurant basic data
+        (callback) => {
+            Restaurant.find({id: restaurantId}, (err, restaurantResult) => {
+                fullRestaurantData.basicData = restaurantResult;
+                callback(err);
+            });
+        },
+        // Restaurant's menu
+        (callback) => {
+            Menu.find({restaurantId: restaurantId}, (err, menuResult) => {
+                fullRestaurantData.manu = menuResult;
+                callback(err);
+            });
+        }
+    ], (err) => {
         if (err) {
             loggerUtil.logError(`While retrieving restaurant ${restaurantId} encountered
                                 error ${err}`);
 
-            callback(err);
+            finalCallback(err);
         }
 
-        fullRestaurantData.basicData = restaurantResult;
-
-        Menu.find({restaurantId: restaurantId}, (err, menuResult) => {
-            if (err) {
-                loggerUtil.logError(`While retrieving restaurant menu of ${restaurantId} encountered
-                                error ${err}`);
-            }
-
-            fullRestaurantData.menu = menuResult;
-
-            callback(null, fullRestaurantData);
-        });
-    })
+        finalCallback(null, fullRestaurantData);
+    });
 }
 
 
 module.exports.createNewRestaurant = createNewRestaurant;
-module.exports.getRestaurantById = getRestaurantById;
+module.exports.getRestaurantFullDataById = getRestaurantFullDataById;
