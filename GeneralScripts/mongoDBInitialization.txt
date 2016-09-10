@@ -56,7 +56,7 @@ db.organizations.insert({
 db.users.insert({
     id: "e1436d32-d8b6-44ff-99b2-c617bc2da183",
     email: "hazan@burgas.com",
-    password: "burgas",
+    password: "$2a$10$LQgL1Es4SzPx4VeAl1a65eEs5pDnfPn6xgyApBY.Xdujbc7ULo0x2",
     firstName: "Oren",
     lastName: "Hazan",
     organizationId: "2636c284-2c02-44e4-af1c-b4133b1a7dfe",

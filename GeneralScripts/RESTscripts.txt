@@ -15,8 +15,8 @@ POST http://localhost:3000/user/
 // Authenticate User
 PUT http://localhost:3000/user/authenticate
 {
-    "email": "omri@gmail.com",
-    "password": "1234"
+    "email": "hazan@burgas.com",
+    "password": "12345"
 }
 
 // Update user email
