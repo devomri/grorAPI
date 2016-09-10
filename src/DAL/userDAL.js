@@ -75,7 +75,19 @@ function updateUserEmail(userId, userNewEmail, callback) {
     });
 }
 
+// Delete user
+function deleteUser(userId, callback) {
+    User.remove({id: userId}, (err) => {
+        if (err) {
+            loggerUtil.logError(`Error in deleteUser: ${err}`);
+        }
+
+        callback(err);
+    });
+}
+
 module.exports.getAllUsers = getAllUsers;
 module.exports.insertNewUser = insertNewUser;
 module.exports.authenticateUser = authenticateUser;
 module.exports.updateUserEmail = updateUserEmail;
+module.exports.deleteUser = deleteUser;

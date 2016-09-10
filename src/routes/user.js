@@ -67,5 +67,19 @@ router.put('/id/:userId', (req, res) => {
         })
 });
 
+// Delete user
+router.delete('/id/:userId', (req, res) => {
+    userDAL.deleteUser(req.params.userId, (err) => {
+        if (err) {
+            return res.send({
+                message: 'Problem while deleting the user'
+            })
+        }
+
+        res.send({
+            message: 'User deleted successfully'
+        })
+    })
+});
 
 export default router;

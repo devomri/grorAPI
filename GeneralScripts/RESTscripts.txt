@@ -25,6 +25,9 @@ PUT http://localhost:3000/user/id/:userId
     "email": "newEmail@mta.ac.il"
 }
 
+// Delete the user
+DELETE http://localhost:3000/user/id/:userId
+
 // Get all restaurants
 GET http://localhost:3000/restaurant/
 
