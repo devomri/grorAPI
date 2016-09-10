@@ -19,6 +19,12 @@ PUT http://localhost:3000/user/authenticate
     "password": "1234"
 }
 
+// Update user email
+PUT http://localhost:3000/user/id/:userId
+{
+    "email": "newEmail@mta.ac.il"
+}
+
 // Get all restaurants
 GET http://localhost:3000/restaurant/
 

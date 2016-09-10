@@ -60,6 +60,22 @@ function authenticateUser(userEmail, userPass, callback) {
     });
 }
 
+// Update user email
+function updateUserEmail(userId, userNewEmail, callback) {
+    User.update({ id: userId }, {
+        $set: {
+            email: userNewEmail
+        }
+    }, (err) => {
+        if (err) {
+            loggerUtil.logError(`Error in updateUserEmail ${err}`);
+        }
+
+        callback(err);
+    });
+}
+
 module.exports.getAllUsers = getAllUsers;
 module.exports.insertNewUser = insertNewUser;
 module.exports.authenticateUser = authenticateUser;
+module.exports.updateUserEmail = updateUserEmail;
