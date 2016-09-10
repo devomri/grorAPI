@@ -1,6 +1,6 @@
 import * as q from 'q';
 import mongoose from 'mongoose';
-import bcrypt from 'bcrypt';
+import * as bcrypt from 'bcrypt';
 
 const userSchema = new mongoose.Schema({
     id: String,
@@ -14,23 +14,18 @@ const userSchema = new mongoose.Schema({
 
 // Saving the user's password hashed in the DB (security purposes)
 userSchema.pre('save', function(next) {
-    let self = this;
 
-    // Generate a salt
-    bcrypt.genSalt(10, (err, salt) => {
+    // Hash the password using 10 rounds of salt
+    bcrypt.hash(this.password, 10, (err, hash) => {
         if (err)
             return next(err);
 
-        // Hash the password using the new salt
-        bcrypt.hash(self.password, salt, (err, hash) => {
-            self.password = hash;
-
-            next();
-        })
+        this.password = hash;
+        next();
     });
 });
 
-userSchema.methods.comparePassword = (candidatePassword) => {
+userSchema.methods.comparePassword = function (candidatePassword){
     return q.ninvoke(bcrypt, 'compare', candidatePassword, this.password);
 };
 

@@ -1,6 +1,6 @@
 import express from 'express';
 import * as userDAL from '../DAL/userDAL';
-import fix from 'fixer';
+import fix from '../utils/fixer';
 
 const router = express.Router();
 
