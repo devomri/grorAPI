@@ -4,7 +4,7 @@ import organizationDAL from '../DAL/organizationDAL';
 const router = express.Router();
 
 router.get('/', (req, res) => {
-    organizationDAL.getAllRestaurants((err, organizations) => {
+    organizationDAL.getAllOrganizations((err, organizations) => {
        if (err){
            res.send({message: err});
 

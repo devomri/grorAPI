@@ -2,7 +2,7 @@ import loggerUtil from '../utils/loggerUtil';
 import Organization from '../model/organization';
 import config from '../configuration/config';
 
-function getAllRestaurants(callback) {
+function getAllOrganizations(callback) {
     Organization.find({}, config.mongo.defaultMask,
         (err, organizations) => {
         if (err) {
@@ -15,4 +15,4 @@ function getAllRestaurants(callback) {
     });
 }
 
-module.exports.getAllRestaurants = getAllRestaurants;
+module.exports.getAllOrganizations = getAllOrganizations;

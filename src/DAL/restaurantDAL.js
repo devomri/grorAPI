@@ -1,7 +1,8 @@
 import async from 'async';
+import uuid from 'uuid';
 import Restaurant from '../model/restaurant';
 import Menu from '../model/menu';
-import Feedback from '../model/feedback'
+import Feedback from '../model/feedback';
 import loggerUtil from '../utils/loggerUtil';
 import config from '../configuration/config';
 
@@ -56,7 +57,7 @@ function getRestaurantFullDataById(restaurantId, finalCallback) {
         },
         // Restaurant's feedbacks
         (callback) => {
-            Feedback.find({},config.mongo.defaultMask ,
+            Feedback.find({restaurantId: restaurantId},config.mongo.defaultMask ,
                 (err, feedbacks) => {
                 fullRestaurantData.feedbacks = feedbacks;
                 callback(err);
