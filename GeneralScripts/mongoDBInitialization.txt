@@ -6,12 +6,29 @@ db.dropDatabase();
 
 use gror;
 
+// Collection creation
 db.createCollection('users');
 db.createCollection('organizations');
 db.createCollection('restaurants');
-db.createCollection('restaurantFeedbacks');
+db.createCollection('feedbacks');
 db.createCollection('menus');
 db.createCollection('purchases');
+
+// Indices creation
+db.users.createIndex({"id": 1}, { unique: true });
+db.users.createIndex({"email": 1}, { unique: true });
+
+db.organizations.createIndex({"id": 1}, { unique: true });
+
+db.restaurants.createIndex({"id": 1}, { unique: true });
+db.restaurants.createIndex({"name": 1});
+
+db.feedbacks.createIndex({"id": 1}, { unique: true });
+db.feedbacks.createIndex({"userId": 1});
+
+db.menus.createIndex({"restaurant_id": 1});
+
+db.purchases.createIndex({"id": 1}, { unique: true });
 
 // ** Initialization data **
 
