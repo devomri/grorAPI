@@ -3,10 +3,10 @@ import uuid from 'uuid';
 import Restaurant from '../model/restaurant';
 import Menu from '../model/menu';
 import Feedback from '../model/feedback';
-import loggerUtil from '../utils/loggerUtil';
+import * as loggerUtil from '../utils/loggerUtil';
 import config from '../configuration/config';
 
-function getAllRestaurantsPartialData(callback) {
+export const getAllRestaurantsPartialData = (callback) => {
     Restaurant.find({}, config.mongo.defaultMask , (err, restaurants) => {
         if (err) {
             loggerUtil.logError(`Error in getAllRestaurantsPartialData: ${err}`);
@@ -16,12 +16,12 @@ function getAllRestaurantsPartialData(callback) {
 
         callback(null, restaurants);
     });
-}
+};
 
-function searchRestaurantByName(restaurantName, callback) {
+export const searchRestaurantByName = (restaurantName, callback) => {
     Restaurant.find({
         name: {
-            $regex: new RegExp(restaurantName, "i") // case insensitive
+            $regex: new RegExp(restaurantName, 'i') // case insensitive
         }
     }, config.mongo.defaultMask ,
      (err, restaurantResults) => {
@@ -32,11 +32,11 @@ function searchRestaurantByName(restaurantName, callback) {
         }
 
         callback(null, restaurantResults);
-    },);
-}
+    });
+};
 
-function getRestaurantFullDataById(restaurantId, finalCallback) {
-    var fullRestaurantData = {};
+export const getRestaurantFullDataById = (restaurantId, finalCallback) => {
+    const fullRestaurantData = {};
 
     async.parallel([
         // Restaurant basic data
@@ -73,8 +73,4 @@ function getRestaurantFullDataById(restaurantId, finalCallback) {
 
         finalCallback(null, fullRestaurantData);
     });
-}
-
-module.exports.getAllRestaurantsPartialData = getAllRestaurantsPartialData;
-module.exports.searchRestaurantByName = searchRestaurantByName;
-module.exports.getRestaurantFullDataById = getRestaurantFullDataById;
+};

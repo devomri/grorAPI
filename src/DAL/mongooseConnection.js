@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import loggerUtil from '../utils/loggerUtil';
+import * as loggerUtil from '../utils/loggerUtil';
 import config from '../configuration/config';
 
 const connectionUrl = `mongodb://${config.mongo.address}/${config.mongo.databaseName}`;
@@ -16,8 +16,7 @@ mongoose.connection.on('error', (error) => {
 });
 
 
-const mongoConnect = () => {
+export default () => {
     mongoose.connect(connectionUrl);
 };
 
-export default mongoConnect;

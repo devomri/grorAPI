@@ -1,9 +1,9 @@
 import uuid from 'uuid';
 import Feedback from '../model/feedback';
-import loggerUtil from '../utils/loggerUtil';
+import * as loggerUtil from '../utils/loggerUtil';
 import config from '../configuration/config';
 
-function insertRestaurantFeedback(feedbackModel, callback) {
+export const insertRestaurantFeedback = (feedbackModel, callback) => {
     const feedbackToAdd = new Feedback({
         id: uuid.v4(),
         restaurantId: feedbackModel.restaurantId,
@@ -20,9 +20,9 @@ function insertRestaurantFeedback(feedbackModel, callback) {
 
         callback(err);
     });
-}
+};
 
-function removeRestaurantFeedback(feedbackId, callback) {
+export const removeRestaurantFeedback = (feedbackId, callback) => {
     Feedback.remove({id: feedbackId}, (err) => {
         if (err) {
             loggerUtil.logError(`Error in removeRestaurantFeedback: ${err}`);
@@ -30,9 +30,9 @@ function removeRestaurantFeedback(feedbackId, callback) {
 
         callback(err);
     });
-}
+};
 
-function updateRestaurantFeedback(feedbackId, feedbackNewText, feedbackNewRank, callback) {
+export const updateRestaurantFeedback = (feedbackId, feedbackNewText, feedbackNewRank, callback) => {
     Feedback.update({id: feedbackId}, {
             $set: {
                 feedbackDate: new Date(),
@@ -46,8 +46,4 @@ function updateRestaurantFeedback(feedbackId, feedbackNewText, feedbackNewRank, 
 
                 callback(err);
     });
-}
-
-module.exports.insertRestaurantFeedback = insertRestaurantFeedback;
-module.exports.removeRestaurantFeedback = removeRestaurantFeedback;
-module.exports.updateRestaurantFeedback = updateRestaurantFeedback;
+};

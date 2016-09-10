@@ -1,9 +1,9 @@
 import uuid from 'uuid';
 import User from '../model/user';
-import loggerUtil from '../utils/loggerUtil';
+import * as loggerUtil from '../utils/loggerUtil';
 import config from '../configuration/config';
 
-function getAllUsers(callback) {
+export const getAllUsers = (callback) => {
     User.find({}, config.mongo.defaultMask,
         (err, users) => {
         if (err) {
@@ -14,10 +14,10 @@ function getAllUsers(callback) {
 
         callback(null, users)
     });
-}
+};
 
 // Create new user
-function insertNewUser(userModel, callback) {
+export const insertNewUser = (userModel, callback) => {
     const userToAdd = new User({
         id: uuid.v4(),
         email: userModel.email,
@@ -35,10 +35,10 @@ function insertNewUser(userModel, callback) {
 
         callback(err);
     });
-}
+};
 
 // Authenticate user
-function authenticateUser(userEmail, userPass, callback) {
+export const authenticateUser = (userEmail, userPass, callback) => {
     User.findOne({email: userEmail},config.mongo.defaultMask,
         (err, userData) => {
             if (err){
@@ -58,10 +58,10 @@ function authenticateUser(userEmail, userPass, callback) {
                 return callback(err, isMatch);
             })
     });
-}
+};
 
 // Update user email
-function updateUserEmail(userId, userNewEmail, callback) {
+export const updateUserEmail = (userId, userNewEmail, callback) => {
     User.update({ id: userId }, {
         $set: {
             email: userNewEmail
@@ -73,10 +73,10 @@ function updateUserEmail(userId, userNewEmail, callback) {
 
         callback(err);
     });
-}
+};
 
 // Delete user
-function deleteUser(userId, callback) {
+export const deleteUser = (userId, callback) => {
     User.remove({id: userId}, (err) => {
         if (err) {
             loggerUtil.logError(`Error in deleteUser: ${err}`);
@@ -84,10 +84,4 @@ function deleteUser(userId, callback) {
 
         callback(err);
     });
-}
-
-module.exports.getAllUsers = getAllUsers;
-module.exports.insertNewUser = insertNewUser;
-module.exports.authenticateUser = authenticateUser;
-module.exports.updateUserEmail = updateUserEmail;
-module.exports.deleteUser = deleteUser;
+};
