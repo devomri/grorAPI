@@ -1,5 +1,4 @@
 import * as q from 'q';
-import async from 'async';
 import uuid from 'uuid';
 import Restaurant from '../model/restaurant';
 import Menu from '../model/menu';
