@@ -34,5 +34,13 @@ POST http://localhost:3000/restaurant/feedback
     "rank": 8
 }
 
+// Update the feedback
+PUT http://localhost:3000/restaurant/feedback/
+{
+    "id": feedbackId,
+    "text": "New feedback text!!",
+    "rank": 5
+}
+
 // Delete feedback
 DELETE http://localhost:3000/restaurant/feedback/id/:feedbackId

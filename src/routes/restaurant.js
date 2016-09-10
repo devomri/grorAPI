@@ -83,4 +83,22 @@ router.delete('/feedback/id/:id', (req, res) => {
     });
 });
 
+// Update a feedback
+router.put('/feedback', (req, res) => {
+    feedbackDAL.updateRestaurantFeedback(req.body.id,
+        req.body.text,
+        req.body.rank,
+        (err) => {
+            if (err) {
+                return res.send({
+                    message: 'Feedback was not updated'
+                });
+            }
+
+            res.send({
+                message: 'Feedback updated successfully'
+            })
+        })
+});
+
 export default router;

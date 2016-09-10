@@ -32,6 +32,22 @@ function removeRestaurantFeedback(feedbackId, callback) {
     });
 }
 
+function updateRestaurantFeedback(feedbackId, feedbackNewText, feedbackNewRank, callback) {
+    Feedback.update({id: feedbackId}, {
+            $set: {
+                feedbackDate: new Date(),
+                text: feedbackNewText,
+                rank: feedbackNewRank
+            }
+        }, (err) => {
+                if (err) {
+                    loggerUtil.logError(`Error in updateRestaurantFeedback: ${err}`);
+                }
+
+                callback(err);
+    });
+}
+
 module.exports.insertRestaurantFeedback = insertRestaurantFeedback;
 module.exports.removeRestaurantFeedback = removeRestaurantFeedback;
-
+module.exports.updateRestaurantFeedback = updateRestaurantFeedback;
