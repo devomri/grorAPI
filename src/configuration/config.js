@@ -1,11 +1,12 @@
-var config = {};
-
-config.server = {};
-config.server.port = 3000;
-
-config.mongo = {};
-config.mongo.address = "localhost";
-config.mongo.databaseName = "gror";
-config.mongo.defaultMask = {_id: 0};
-
-export default config;
+export default {
+  server: {
+    port: 3000
+  },
+  mongo: {
+    address: 'localhost',
+    databaseName: 'gror',
+    defaultMask: {
+      _id: 0
+    }
+  }
+};

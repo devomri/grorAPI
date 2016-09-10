@@ -1,8 +1,8 @@
-import loggerUtil from '../utils/loggerUtil';
+import * as loggerUtil from '../utils/loggerUtil';
 import Organization from '../model/organization';
 import config from '../configuration/config';
 
-function getAllOrganizations(callback) {
+export const getAllOrganizations = (callback) => {
     Organization.find({}, config.mongo.defaultMask,
         (err, organizations) => {
         if (err) {
@@ -13,6 +13,4 @@ function getAllOrganizations(callback) {
 
         callback(err, organizations);
     });
-}
-
-module.exports.getAllOrganizations = getAllOrganizations;
+};

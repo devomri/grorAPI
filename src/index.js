@@ -2,7 +2,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import routes from './routes';
 import mongoConnect from './DAL/mongooseConnection';
-import loggerUtil from './utils/loggerUtil';
+import * as loggerUtil from './utils/loggerUtil';
 import config from './configuration/config';
 
 mongoConnect();

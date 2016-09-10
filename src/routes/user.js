@@ -1,5 +1,5 @@
 import express from 'express';
-import userDAL from '../DAL/userDAL'
+import * as userDAL from '../DAL/userDAL'
 
 const router = express.Router();
 
@@ -23,14 +23,14 @@ router.post('/', (req, res) => {
     userDAL.insertNewUser(req.body, (err) => {
         if (err) {
             res.send({
-                message: `user was not saved`
+                message: 'user was not saved'
             });
 
             return;
         }
 
         res.send({
-            message: 'user was saved successfuly'
+            message: 'user was saved successfully'
         })
     })
 });

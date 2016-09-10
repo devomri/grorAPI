@@ -1,6 +1,6 @@
 import express from 'express';
-import restaurantDAL from '../DAL/restaurantDAL';
-import feedbackDAL from '../DAL/feedbackDAL'
+import * as restaurantDAL from '../DAL/restaurantDAL';
+import * as feedbackDAL from '../DAL/feedbackDAL'
 
 const router = express.Router();
 

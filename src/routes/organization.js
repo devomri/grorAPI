@@ -1,5 +1,5 @@
 import express from 'express';
-import organizationDAL from '../DAL/organizationDAL';
+import * as organizationDAL from '../DAL/organizationDAL';
 
 const router = express.Router();
 
