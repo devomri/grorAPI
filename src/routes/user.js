@@ -8,7 +8,7 @@ router.get('/', (req, res) => {
     userDAL.getAllUsers((err, users) => {
         if (err) {
             res.send({
-                message: err
+                message: "Error while getting all the users"
             });
 
             return;

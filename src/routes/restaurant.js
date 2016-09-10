@@ -9,7 +9,7 @@ router.get('/', (req, res) => {
     restaurantDAL.getAllRestaurantsPartialData((err, restaurants) => {
        if (err) {
            res.send({
-               message: err
+               message: "Error while getting all restaurants"
            });
 
            return;
@@ -25,7 +25,7 @@ router.get('/name/:restaurantName', (req, res) => {
          (err, restaurants) => {
              if (err) {
                  res.send({
-                     message: err
+                     message: "Error while searching for restaurant by name"
                  });
 
                  return;
