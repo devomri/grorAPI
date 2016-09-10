@@ -1,8 +1,11 @@
+import * as q from 'q';
 import mongoose from 'mongoose';
 import * as loggerUtil from '../utils/loggerUtil';
 import config from '../configuration/config';
 
 const connectionUrl = `mongodb://${config.mongo.address}/${config.mongo.databaseName}`;
+
+mongoose.Promise = q.Promise;
 
 // ** Connection events **
 // Successfully connected
