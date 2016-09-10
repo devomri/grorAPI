@@ -1,13 +1,15 @@
 import uuid from 'uuid';
 import User from '../model/user';
 import loggerUtil from '../utils/loggerUtil';
+import config from '../configuration/config';
 
 function getAllUsers(callback) {
-    User.find({}, (err, users) => {
+    User.find({}, config.mongo.defaultMask,
+        (err, users) => {
         if (err) {
             loggerUtil.logError(`Error in getAllUsers method: ${err}`);
 
-            callback(err);
+            return callback(err);
         }
 
         callback(null, users)
@@ -37,14 +39,24 @@ function insertNewUser(userModel, callback) {
 
 // Authenticate user
 function authenticateUser(userEmail, userPass, callback) {
-    User.findOne({email: userEmail}, (err, userData) => {
-        userData.comparePassword(userPass, (err, isMatch) => {
+    User.findOne({email: userEmail},config.mongo.defaultMask,
+        (err, userData) => {
             if (err){
                 loggerUtil.logError(`Error in authenticateUser: ${err}`);
+                return callback(err);
             }
 
-            callback(err, isMatch);
-        })
+            if (!userData) {
+                return callback(null, false);
+            }
+
+            userData.comparePassword(userPass, (err, isMatch) => {
+                if (err){
+                    loggerUtil.logError(`Error in authenticateUser: ${err}`);
+                }
+
+                return callback(err, isMatch);
+            })
     });
 }
 

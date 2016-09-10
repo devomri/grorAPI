@@ -52,6 +52,17 @@ db.organizations.insert({
     ]
 });
 
+// Users
+db.users.insert({
+    id: "e1436d32-d8b6-44ff-99b2-c617bc2da183",
+    email: "hazan@burgas.com",
+    password: "burgas",
+    firstName: "Oren",
+    lastName: "Hazan",
+    organizationId: "2636c284-2c02-44e4-af1c-b4133b1a7dfe",
+    phoneNumber: "050-5555555"
+});
+
 // Restaurants
 db.restaurants.insert({
     id: "44085169-b327-4314-b08d-4600d4077f25",
@@ -134,7 +145,7 @@ db.menus.insert({
 db.feedbacks.insert({
     id: "5c1901d8-699f-48c0-9676-c74c33312430",
     restaurantId: "0a87d86a-ec20-4a1c-b676-c08b5b17e90d",
-    userId: "TODO",
+    userId: "e1436d32-d8b6-44ff-99b2-c617bc2da183",
     feedbackDate: new Date(),
     text: "The best Shawarma in town",
     rank: 10
@@ -143,7 +154,7 @@ db.feedbacks.insert({
 db.feedbacks.insert({
     id: "b4be92d3-720f-415a-b2f8-b69979342e6f",
     restaurantId: "0a87d86a-ec20-4a1c-b676-c08b5b17e90d",
-    userId: "TODO",
+    userId: "e1436d32-d8b6-44ff-99b2-c617bc2da183",
     feedbackDate: new Date(),
     text: "Expensive as Manhattan, tastes like Gaza",
     rank: 1

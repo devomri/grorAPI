@@ -5,7 +5,7 @@ GET http://localhost:3000/user/
 POST http://localhost:3000/user/
 {
     "email": "omri@gmail.com",
-    "password": "1234",
+    "password": "12345",
     "firstName": "Omri",
     "lastName": "Avrahami",
     "organizationId": "26d5eac7-a91c-4fae-a254-3bcd4195d854",
@@ -20,5 +20,7 @@ PUT http://localhost:3000/user/authenticate
 }
 
 // Get all restaurants
+GET http://localhost:3000/restaurant/
 
 // Get full data about restaurant
+GET http://localhost:3000/restaurant/id/0a87d86a-ec20-4a1c-b676-c08b5b17e90d
