@@ -16,15 +16,16 @@ db.createCollection('purchases');
 
 // Indices creation
 db.users.createIndex({"id": 1}, { unique: true });
-db.users.createIndex({"email": "text"}, { unique: true });
+db.users.createIndex({"email": 1}, { unique: true });
 
 db.organizations.createIndex({"id": 1}, { unique: true });
 
 db.restaurants.createIndex({"id": 1}, { unique: true });
-db.restaurants.createIndex({ "name": "text"});
+db.restaurants.createIndex({ "name": 1});
 
 db.feedbacks.createIndex({"id": 1}, { unique: true });
 db.feedbacks.createIndex({"userId": 1});
+db.feedbacks.createIndex({"text": "text"});
 
 db.menus.createIndex({"restaurant_id": 1});
 
