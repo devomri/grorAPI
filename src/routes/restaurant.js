@@ -32,7 +32,7 @@ router.post('/feedback', (req, res, next) => {
     .then(() => res.send({
       message: 'Feedback created successfully'
     }))
-    .catch(fix(next, new Error('Error while creating the feedback')));
+    .catch(next);
 });
 
 // Remove a feedback
@@ -56,7 +56,7 @@ router.put('/feedback', (req, res, next) => {
     .then(() => res.send({
         message : 'Feedback updated successfully'
       }))
-    .catch(fix(next, new Error('Feedback was not updated')));
+    .catch(next);
 });
 
 export default router;

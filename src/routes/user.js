@@ -47,4 +47,11 @@ router.delete('/id/:userId', (req, res, next) => {
     .catch(fix(next, new Error('Problem while deleting the user')));
 });
 
+// Get user by id
+router.get('/id/:userId', (req, res, next) => {
+    userDAL.getUserById(req.params.userId)
+        .then((user) => res.send(user))
+        .catch(fix(next, new Error('Error while getting user by id')));
+});
+
 export default router;

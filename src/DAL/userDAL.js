@@ -51,3 +51,8 @@ export const updateUserEmail = (userId, userNewEmail) => {
 export const deleteUser = (userId) => {
     return User.remove({id: userId});
 };
+
+// Get user details by id
+export const getUserById = (userId) => {
+  return User.findOne({id: userId}, config.mongo.defaultMask);
+};

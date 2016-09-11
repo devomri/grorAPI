@@ -30,4 +30,5 @@ export const getRestaurantFullDataById = (restaurantId) => {
             feedbacks
         };
     });
+
 };
