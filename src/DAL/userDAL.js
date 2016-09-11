@@ -1,6 +1,7 @@
 import uuid from 'uuid';
 import User from '../model/user';
 import config from '../configuration/config';
+import { getOrganizationById } from './organizationDAL';
 
 export const getAllUsers = () => {
     return User.find({}, config.mongo.defaultMask);
@@ -18,7 +19,17 @@ export const insertNewUser = (userModel) => {
         phoneNumber: userModel.phoneNumber
     });
 
-    return userToAdd.save();
+    // Verify that the organization exists before saving the user
+    const verifyOrganizationPromise = getOrganizationById(userModel.organizationId);
+
+    return verifyOrganizationPromise.then((organization) => {
+        if(organization) {
+            return userToAdd.save();
+        }
+        else {
+            throw new Error("No such organization");
+        }
+    });
 };
 
 // Authenticate user

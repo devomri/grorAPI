@@ -17,7 +17,7 @@ router.post('/', (req, res, next) => {
     .then(() => res.send({
         message: 'user was saved successfully'
     }))
-    .catch(fix(next, new Error('user was not saved')));
+    .catch(next);
 });
 
 // Authenticate user
