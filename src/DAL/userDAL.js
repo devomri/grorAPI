@@ -1,23 +1,13 @@
 import uuid from 'uuid';
 import User from '../model/user';
-import * as loggerUtil from '../utils/loggerUtil';
 import config from '../configuration/config';
 
-export const getAllUsers = (callback) => {
-    User.find({}, config.mongo.defaultMask,
-        (err, users) => {
-        if (err) {
-            loggerUtil.logError(`Error in getAllUsers method: ${err}`);
-
-            return callback(err);
-        }
-
-        callback(null, users)
-    });
+export const getAllUsers = () => {
+    return User.find({}, config.mongo.defaultMask);
 };
 
 // Create new user
-export const insertNewUser = (userModel, callback) => {
+export const insertNewUser = (userModel) => {
     const userToAdd = new User({
         id: uuid.v4(),
         email: userModel.email,
@@ -28,60 +18,25 @@ export const insertNewUser = (userModel, callback) => {
         phoneNumber: userModel.phoneNumber
     });
 
-    userToAdd.save((err) => {
-        if (err){
-            loggerUtil.logError(`Error in insertNewUser: ${err}`);
-        }
-
-        callback(err);
-    });
+    return userToAdd.save();
 };
 
 // Authenticate user
-export const authenticateUser = (userEmail, userPass, callback) => {
-    User.findOne({email: userEmail},config.mongo.defaultMask,
-        (err, userData) => {
-            if (err){
-                loggerUtil.logError(`Error in authenticateUser: ${err}`);
-                return callback(err);
-            }
-
-            if (!userData) {
-                return callback(null, false);
-            }
-
-            userData.comparePassword(userPass, (err, isMatch) => {
-                if (err){
-                    loggerUtil.logError(`Error in authenticateUser: ${err}`);
-                }
-
-                return callback(err, isMatch);
-            })
-    });
+export const authenticateUser = (userEmail, userPass) => {
+    return User.findOne({email: userEmail},config.mongo.defaultMask)
+      .then((userData) => userData.comparePassword(userPass));
 };
 
 // Update user email
-export const updateUserEmail = (userId, userNewEmail, callback) => {
-    User.update({ id: userId }, {
+export const updateUserEmail = (userId, userNewEmail) => {
+    return User.update({ id: userId }, {
         $set: {
             email: userNewEmail
         }
-    }, (err) => {
-        if (err) {
-            loggerUtil.logError(`Error in updateUserEmail ${err}`);
-        }
-
-        callback(err);
     });
 };
 
 // Delete user
-export const deleteUser = (userId, callback) => {
-    User.remove({id: userId}, (err) => {
-        if (err) {
-            loggerUtil.logError(`Error in deleteUser: ${err}`);
-        }
-
-        callback(err);
-    });
+export const deleteUser = (userId) => {
+    return User.remove({id: userId});
 };

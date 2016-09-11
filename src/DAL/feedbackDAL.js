@@ -1,9 +1,8 @@
 import uuid from 'uuid';
 import Feedback from '../model/feedback';
-import * as loggerUtil from '../utils/loggerUtil';
 import config from '../configuration/config';
 
-export const insertRestaurantFeedback = (feedbackModel, callback) => {
+export const insertRestaurantFeedback = (feedbackModel) => {
     const feedbackToAdd = new Feedback({
         id: uuid.v4(),
         restaurantId: feedbackModel.restaurantId,
@@ -13,37 +12,19 @@ export const insertRestaurantFeedback = (feedbackModel, callback) => {
         rank: feedbackModel.rank
     });
 
-    feedbackToAdd.save((err) => {
-        if (err) {
-            loggerUtil.logError(`Error in insertRestaurantFeedback: ${err}`);
-        }
-
-        callback(err);
-    });
+    return feedbackToAdd.save();
 };
 
-export const removeRestaurantFeedback = (feedbackId, callback) => {
-    Feedback.remove({id: feedbackId}, (err) => {
-        if (err) {
-            loggerUtil.logError(`Error in removeRestaurantFeedback: ${err}`);
-        }
-
-        callback(err);
-    });
+export const removeRestaurantFeedback = (feedbackId) => {
+    return Feedback.remove({id: feedbackId});
 };
 
-export const updateRestaurantFeedback = (feedbackId, feedbackNewText, feedbackNewRank, callback) => {
-    Feedback.update({id: feedbackId}, {
+export const updateRestaurantFeedback = (feedback) => {
+    return Feedback.update({id: feedback.id}, {
             $set: {
                 feedbackDate: new Date(),
-                text: feedbackNewText,
-                rank: feedbackNewRank
+                text: feedback.text,
+                rank: feedback.rank
             }
-        }, (err) => {
-                if (err) {
-                    loggerUtil.logError(`Error in updateRestaurantFeedback: ${err}`);
-                }
-
-                callback(err);
-    });
+        });
 };

@@ -1,104 +1,62 @@
 import express from 'express';
 import * as restaurantDAL from '../DAL/restaurantDAL';
-import * as feedbackDAL from '../DAL/feedbackDAL'
+import * as feedbackDAL from '../DAL/feedbackDAL';
+import fix from '../utils/fixer';
 
 const router = express.Router();
 
 // Get all basic information about all the restaurants
-router.get('/', (req, res) => {
-    restaurantDAL.getAllRestaurantsPartialData((err, restaurants) => {
-       if (err) {
-           res.send({
-               message: "Error while getting all restaurants"
-           });
-
-           return;
-       }
-
-        res.send(restaurants);
-    });
+router.get('/', (req, res, next) => {
+    restaurantDAL.getAllRestaurantsPartialData()
+    .then((restaurants) => res.send(restaurants))
+    .catch(fix(next, new Error('Error while getting all restaurants')));
 });
 
 // Serach restaurants by name (case insensitive)
-router.get('/name/:restaurantName', (req, res) => {
-        restaurantDAL.searchRestaurantByName(req.params.restaurantName,
-         (err, restaurants) => {
-             if (err) {
-                 res.send({
-                     message: "Error while searching for restaurant by name"
-                 });
-
-                 return;
-             }
-
-             res.send(restaurants);
-        });
-    }
-);
+router.get('/name/:restaurantName', (req, res, next) => {
+    restaurantDAL.searchRestaurantByName(req.params.restaurantName)
+    .then((restaurants) => res.send(restaurants))
+    .catch(fix(next, new Error('Error while searching for restaurant by name')));
+});
 
 // Get restaurant by ID
-router.get('/id/:id', (req, res) => {
-    restaurantDAL.getRestaurantFullDataById(req.params.id, (err, restaurantResult) =>{
-        if (err){
-            res.send({
-                message: err
-            });
-
-            return;
-        }
-
-        res.send({
-            restaurant: restaurantResult
-        });
-    });
+router.get('/id/:id', (req, res, next) => {
+    restaurantDAL.getRestaurantFullDataById(req.params.id)
+    .then((restaurant) => res.send(restaurant))
+    .catch(fix(next, new Error('Error while getting restaurant')));
 });
 
 // Create new feedback
-router.post('/feedback', (req, res) => {
-    feedbackDAL.insertRestaurantFeedback(req.body, (err) => {
-        if (err) {
-            return res.send({
-                message: `Error while creating the feedback`
-            });
-        }
-
-        res.send({
-            message: 'Feedback created successfully'
-        });
-    })
+router.post('/feedback', (req, res, next) => {
+    feedbackDAL.insertRestaurantFeedback(req.body)
+    .then(() => res.send({
+      message: 'Feedback created successfully'
+    }))
+    .catch(fix(next, new Error('Error while creating the feedback')));
 });
 
 // Remove a feedback
-router.delete('/feedback/id/:id', (req, res) => {
-    feedbackDAL.removeRestaurantFeedback(req.params.id, (err) => {
-       if (err) {
-           return res.send({
-               message: 'Feedback was not removed'
-           });
-       }
-
-        res.send({
-            message: 'Feedback removed successfully'
-        })
-    });
+router.delete('/feedback/id/:id', (req, res, next) => {
+  feedbackDAL.removeRestaurantFeedback(req.params.id)
+  .then(() => res.send({
+    message: 'Feedback removed successfully'
+  }))
+  .catch(fix(next, new Error('Feedback was not removed')));
 });
 
 // Update a feedback
-router.put('/feedback', (req, res) => {
-    feedbackDAL.updateRestaurantFeedback(req.body.id,
-        req.body.text,
-        req.body.rank,
-        (err) => {
-            if (err) {
-                return res.send({
-                    message: 'Feedback was not updated'
-                });
-            }
+router.put('/feedback', (req, res, next) => {
+    const feedbackLikeObject = {
+      id: req.body.id,
+      text: req.body.text,
+      rank: req.body.rank
+    };
 
-            res.send({
-                message: 'Feedback updated successfully'
-            })
-        })
+    feedbackDAL.updateRestaurantFeedback(feedbackLikeObject)
+    .then(() => res.send({
+        message : 'Feedback updated successfully'
+      }))
+    .catch(fix(next, new Error('Feedback was not updated')));
 });
 
 export default router;
