@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const organizationSchema = new mongoose.Schema({
+export const organizationSchema = new mongoose.Schema({
     id: String,
     name: String,
     location: String,
@@ -15,6 +15,6 @@ const organizationSchema = new mongoose.Schema({
     ]
 });
 
-const Organization = mongoose.model('Organization', organizationSchema);
+export const Organization = mongoose.model('Organization', organizationSchema);
 
 export default Organization;

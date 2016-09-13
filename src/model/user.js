@@ -2,7 +2,7 @@ import * as q from 'q';
 import mongoose from 'mongoose';
 import * as bcrypt from 'bcrypt';
 
-const userSchema = new mongoose.Schema({
+export const userSchema = new mongoose.Schema({
     id: String,
     email: String,
     password: String,
@@ -29,6 +29,6 @@ userSchema.methods.comparePassword = function (candidatePassword){
     return q.ninvoke(bcrypt, 'compare', candidatePassword, this.password);
 };
 
-const User = mongoose.model('User', userSchema);
+export const User = mongoose.model('User', userSchema);
 
 export default User;
