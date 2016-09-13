@@ -4,7 +4,6 @@ import { Restaurant, restaurantSchema } from '../model/restaurant';
 import { Feedback, feedbackSchema } from '../model/feedback';
 import { Menu, menuSchema } from '../model/menu'
 import { Purchase, purchaseSchema } from '../model/purchase';
-import * as logger from '../utils/loggerUtil';
 
 export const generateGrorSchema = () => {
     createIndices();
@@ -113,7 +112,23 @@ const insertRestaurants = () => {
             }
         }).save();
 
-    return createRestaurant1Promise;
+    const createRestaurant2Promise =
+        new Restaurant({
+            id: "44085169-b327-4314-b08d-4600d4077f25",
+            name: "River",
+            phoneNumber: "03-9854712",
+            location: "Tel-Aviv",
+            minimumOrderPrice: 50,
+            minimumSalePrice: 100,
+            manager: {
+                firstName: "Moshe",
+                lastName: "Cohen",
+                phoneNumber: "054-8554112"
+            }
+        }).save();
+
+    return createRestaurant1Promise
+        .then(() => { return createRestaurant2Promise; });
 };
 
 const insertMenus = () => {
