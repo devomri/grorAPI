@@ -30,10 +30,12 @@ Object.keys(routes).forEach((routeName) => {
 });
 
 // This middleware is being used after the actual routes to be handled after them.
+// The last parameter is important to let express know this is an error middleware and not a regular middleware.
 app.use((error, req, res, next) => {
-  logger.logError(error.toString());
   logger.logError(error.stack);
-  res.status(500).send({message: 'An error occurred'});
+
+  // All errors should be GrorErrors, but in case this is a different error we still want to have a status code.
+  res.status(error.statusCode || 500).send({message: 'An error occurred'});
 });
 
 

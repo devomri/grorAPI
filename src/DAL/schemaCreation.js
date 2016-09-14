@@ -1,3 +1,4 @@
+import * as q from 'q';
 import { User, userSchema } from '../model/user';
 import { Organization, organizationSchema } from '../model/organization';
 import { Restaurant, restaurantSchema } from '../model/restaurant';
@@ -38,7 +39,7 @@ const fillSchemaData = () => {
 };
 
 const insertOrganizations = () => {
-    const createOrganization1Promise =
+    const idfOrganization =
         new Organization({
             id: "26d5eac7-a91c-4fae-a254-3bcd4195d854",
             name: "IDF",
@@ -60,7 +61,7 @@ const insertOrganizations = () => {
             ]
         }).save();
 
-    const createOrganization2Promise =
+    const googleOrganization =
         new Organization({
             id: "2636c284-2c02-44e4-af1c-b4133b1a7dfe",
             name: "Google",
@@ -76,14 +77,11 @@ const insertOrganizations = () => {
             ]
         }).save();
 
-    return createOrganization1Promise.then(() => {
-        return createOrganization2Promise;
-    });
+    return q.all([googleOrganization, idfOrganization]);
 };
 
 const insertUsers = () => {
-    const inserUser1Promise =
-        new User({
+    return new User({
             id: "e1436d32-d8b6-44ff-99b2-c617bc2da183",
             email: "hazan@burgas.com",
             password: "$2a$10$LQgL1Es4SzPx4VeAl1a65eEs5pDnfPn6xgyApBY.Xdujbc7ULo0x2",
@@ -92,12 +90,10 @@ const insertUsers = () => {
             organizationId: "2636c284-2c02-44e4-af1c-b4133b1a7dfe",
             phoneNumber: "050-5555555"
         }).save();
-
-    return inserUser1Promise;
 };
 
 const insertRestaurants = () => {
-    const createRestaurant1Promise =
+    const shawarmaHertzel =
         new Restaurant({
             id: "0a87d86a-ec20-4a1c-b676-c08b5b17e90d",
             name: "Shawarma Hertzel",
@@ -112,7 +108,7 @@ const insertRestaurants = () => {
             }
         }).save();
 
-    const createRestaurant2Promise =
+    const river =
         new Restaurant({
             id: "44085169-b327-4314-b08d-4600d4077f25",
             name: "River",
@@ -127,12 +123,11 @@ const insertRestaurants = () => {
             }
         }).save();
 
-    return createRestaurant1Promise
-        .then(() => { return createRestaurant2Promise; });
+    return q.all([shawarmaHertzel, river]);
 };
 
 const insertMenus = () => {
-    const insertMenu1Promise =
+    const riverMenu =
         new Menu({
             restaurantId: "44085169-b327-4314-b08d-4600d4077f25", // River
             items: [
@@ -157,7 +152,7 @@ const insertMenus = () => {
             ]
         }).save();
 
-    const insertMenu2Promise =
+    const hertzelMenu =
         new Menu({
             restaurantId: "0a87d86a-ec20-4a1c-b676-c08b5b17e90d", // Shawarma hertzel
             items: [
@@ -182,13 +177,11 @@ const insertMenus = () => {
             ]
         }).save();
 
-    return insertMenu1Promise.then(() => {
-        return insertMenu2Promise;
-    });
+    return q.all([hertzelMenu, riverMenu]);
 };
 
 const insertFeedbacks = () => {
-    const insertFeedback1Promise =
+    const goodFeedback =
         new Feedback({
             id: "5c1901d8-699f-48c0-9676-c74c33312430",
             restaurantId: "0a87d86a-ec20-4a1c-b676-c08b5b17e90d",
@@ -198,7 +191,7 @@ const insertFeedbacks = () => {
             rank: 10
         }).save();
 
-    const insertFeedback2Promise =
+    const badFeedback =
         new Feedback({
             id: "b4be92d3-720f-415a-b2f8-b69979342e6f",
             restaurantId: "0a87d86a-ec20-4a1c-b676-c08b5b17e90d",
@@ -208,8 +201,6 @@ const insertFeedbacks = () => {
             rank: 1
         }).save();
 
-    return insertFeedback1Promise.then(() => {
-        return insertFeedback2Promise;
-    });
+    return q.all([goodFeedback, badFeedback]);
 };
 

@@ -31,10 +31,8 @@ const createMongooseSchemaDynamically = () => {
                 loggerUtil.logInformation("Gror schema was not available. Generating schema...");
 
                 generateGrorSchema()
-                    .then(loggerUtil.logInformation("Schema was generated successfully"))
-                    .catch((err) => {
-                        loggerUtil.logError(`Schema was could not be generated: ${err}`)
-                    });
+                    .then(() => loggerUtil.logInformation("Schema was generated successfully"))
+                    .catch((err) => loggerUtil.logError(`Schema was could not be generated: ${err}`));
             }
         });
 };

@@ -2,12 +2,12 @@ import uuid from 'uuid';
 import User from '../model/user';
 import config from '../configuration/config';
 import { getOrganizationById } from './organizationDAL';
+import GrorError from '../utils/grorError';
 
 export const getAllUsers = () => {
     return User.find({}, config.mongo.defaultMask);
 };
 
-// Create new user
 export const insertNewUser = (userModel) => {
     const userToAdd = new User({
         id: uuid.v4(),
@@ -20,39 +20,35 @@ export const insertNewUser = (userModel) => {
     });
 
     // Verify that the organization exists before saving the user
-    const verifyOrganizationPromise = getOrganizationById(userModel.organizationId);
+    return getOrganizationById(userModel.organizationId).then((organization) => {
+        if(!organization)
+            throw new GrorError(`Organization with id: ${userModel.organizationId} not found`);
 
-    return verifyOrganizationPromise.then((organization) => {
-        if(organization) {
-            return userToAdd.save();
-        }
-        else {
-            throw new Error("No such organization");
-        }
+        return userToAdd.save();
     });
 };
 
-// Authenticate user
-export const authenticateUser = (userEmail, userPass) => {
-    return User.findOne({email: userEmail},config.mongo.defaultMask)
-      .then((userData) => userData.comparePassword(userPass));
+export const authenticateUser = (email, userPass) => {
+    return User.findOne({ email },config.mongo.defaultMask)
+      .then((userData) => {
+          if(!userData)
+                throw new GrorError(`User with email: ${email} not found`, 404);
+
+          return userData.comparePassword(userPass)
+      });
 };
 
-// Update user email
-export const updateUserEmail = (userId, userNewEmail) => {
-    return User.update({ id: userId }, {
-        $set: {
-            email: userNewEmail
-        }
-    });
+export const updateUserEmail = (id, email) => {
+    return User.update({ id }, { $set: { email } });
 };
 
-// Delete user
-export const deleteUser = (userId) => {
-    return User.remove({id: userId});
+export const deleteUser = (id) => {
+    return User.remove({ id });
 };
 
-// Get user details by id
-export const getUserById = (userId) => {
-  return User.findOne({id: userId}, config.mongo.defaultMask);
+export const getUserById = (id) => {
+  return User.findOne({ id }, config.mongo.defaultMask)
+  .then(() => {
+      throw new GrorError(`User with email: ${id} not found`, 404);
+  });
 };
