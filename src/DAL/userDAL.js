@@ -2,7 +2,7 @@ import uuid from 'uuid';
 import User from '../model/user';
 import config from '../configuration/config';
 import { getOrganizationById } from './organizationDAL';
-import GrorError from '../utils/grorError';
+import { guardInstance } from '../utils/guard';
 
 export const getAllUsers = () => {
     return User.find({}, config.mongo.defaultMask);
@@ -20,22 +20,15 @@ export const insertNewUser = (userModel) => {
     });
 
     // Verify that the organization exists before saving the user
-    return getOrganizationById(userModel.organizationId).then((organization) => {
-        if(!organization)
-            throw new GrorError(`Organization with id: ${userModel.organizationId} not found`);
-
-        return userToAdd.save();
-    });
+    return getOrganizationById(userModel.organizationId)
+    .then(guardInstance(`Organization with id: ${userModel.organizationId} not found`))
+    .then(() => userToAdd.save());
 };
 
 export const authenticateUser = (email, userPass) => {
     return User.findOne({ email },config.mongo.defaultMask)
-      .then((userData) => {
-          if(!userData)
-                throw new GrorError(`User with email: ${email} not found`, 404);
-
-          return userData.comparePassword(userPass)
-      });
+    .then(guardInstance(`User with email: ${email} not found`, 404))
+    .then((userData) => userData.comparePassword(userPass));
 };
 
 export const updateUserEmail = (id, email) => {
@@ -48,7 +41,5 @@ export const deleteUser = (id) => {
 
 export const getUserById = (id) => {
   return User.findOne({ id }, config.mongo.defaultMask)
-  .then(() => {
-      throw new GrorError(`User with email: ${id} not found`, 404);
-  });
+  .then(guardInstance(`User with email: ${id} not found`, 404));
 };

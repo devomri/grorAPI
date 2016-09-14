@@ -4,6 +4,7 @@ import Menu from '../model/menu';
 import Feedback from '../model/feedback';
 import config from '../configuration/config';
 import GrorError from '../utils/grorError';
+import { guardInstance, guardAll } from '../utils/guard';
 
 export const getAllRestaurantsPartialData = () => {
     return Restaurant.find({}, config.mongo.defaultMask);
@@ -11,9 +12,7 @@ export const getAllRestaurantsPartialData = () => {
 
 export const getRestaurantPartialDataById = (id) => {
     return Restaurant.findOne({ id }, config.mongo.defaultMask)
-    .then(() => {
-        throw new GrorError(`Restaurant with id: ${id} not found`, 404);
-    });
+    .then(guardInstance(`Restaurant with id: ${id} not found`, 404));
 };
 
 export const searchRestaurantByName = (restaurantName) => {
@@ -30,10 +29,8 @@ export const getRestaurantFullDataById = (id) => {
     const feedbacksPromise = Feedback.find({restaurantId: id},config.mongo.defaultMask);
 
     return q.all([basicDataPromise, menuPromise, feedbacksPromise])
+    .then(guardAll([`Restaurant with id: ${id} not found`], [404]))
     .spread((basicData, menu, feedbacks) => {
-        if(!basicData)
-            throw new GrorError(`Restaurant with id: ${id} not found`, 404);
-
         return {
             basicData,
             menu,

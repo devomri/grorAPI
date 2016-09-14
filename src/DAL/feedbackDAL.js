@@ -3,7 +3,7 @@ import * as q from 'q';
 import Feedback from '../model/feedback';
 import { getUserById } from './userDAL';
 import { getRestaurantPartialDataById } from './restaurantDAL';
-import GrorError from '../utils/grorError';
+import { guardAll } from '../utils/guard';
 
 export const insertRestaurantFeedback = (feedbackModel) => {
     const feedbackToAdd = new Feedback({
@@ -20,14 +20,8 @@ export const insertRestaurantFeedback = (feedbackModel) => {
 
     // Check the existence of user and restaurant asynchronously
     return q.all([userPromise, restaurantPromise])
-        .spread((user, restaurant) => {
-            if (!user)
-                throw new GrorError('User was not found, feedback won\'t be inserted');
-            if (!restaurant)
-                throw new GrorError('User was not found, feedback won\'t be inserted');
-
-            return feedbackToAdd.save();
-        });
+        .then(guardAll(['User was not found, feedback won\'t be inserted', 'Restaurant was not found, feedback won\'t be inserted'], [500, 500]))
+        .then(() => feedbackToAdd.save());
 };
 
 export const removeRestaurantFeedback = (id) => {
