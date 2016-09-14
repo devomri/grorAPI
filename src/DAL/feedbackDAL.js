@@ -2,8 +2,8 @@ import uuid from 'uuid';
 import * as q from 'q';
 import Feedback from '../model/feedback';
 import { getUserById } from './userDAL';
-import { getRestaurantFullDataById } from './restaurantDAL';
-import * as loggerUtil from '../utils/loggerUtil';
+import { getRestaurantPartialDataById } from './restaurantDAL';
+import { guardAll } from '../utils/guard';
 
 export const insertRestaurantFeedback = (feedbackModel) => {
     const feedbackToAdd = new Feedback({
@@ -15,32 +15,25 @@ export const insertRestaurantFeedback = (feedbackModel) => {
         rank: feedbackModel.rank
     });
 
-    const userExistsPromise = getUserById(feedbackToAdd.userId);
-    const restaurantExistsPromise = getRestaurantFullDataById(feedbackToAdd.restaurantId);
+    const userPromise = getUserById(feedbackToAdd.userId);
+    const restaurantPromise = getRestaurantPartialDataById(feedbackToAdd.restaurantId);
 
     // Check the existence of user and restaurant asynchronously
-    return q.all([userExistsPromise, restaurantExistsPromise])
-        .spread((user, restaurant) => {
-            if (!user) {
-                throw new Error("User was not found, feedback won't be inserted");
-            } else if (!restaurant || restaurant.basicData.length == 0) {
-                throw new Error("User was not found, feedback won't be inserted");
-            } else {
-                return feedbackToAdd.save();
-            }
-        });
+    return q.all([userPromise, restaurantPromise])
+        .then(guardAll(['User was not found, feedback won\'t be inserted', 'Restaurant was not found, feedback won\'t be inserted'], [500, 500]))
+        .then(() => feedbackToAdd.save());
 };
 
-export const removeRestaurantFeedback = (feedbackId) => {
-    return Feedback.remove({id: feedbackId});
+export const removeRestaurantFeedback = (id) => {
+    return Feedback.remove({ id });
 };
 
-export const updateRestaurantFeedback = (feedback) => {
-    return Feedback.update({id: feedback.id}, {
+export const updateRestaurantFeedback = ({id, text, rank}) => {
+    return Feedback.update({ id }, {
             $set: {
                 feedbackDate: new Date(),
-                text: feedback.text,
-                rank: feedback.rank
+                text,
+                rank
             }
         });
 };
