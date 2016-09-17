@@ -25,7 +25,7 @@ router.get('/id/:id', handleError((req, res) => {
 
 // Create new feedback
 router.post('/feedback', handleError((req, res) => {
-    feedbackDAL.insertRestaurantFeedback(req.body)
+    return feedbackDAL.insertRestaurantFeedback(req.body)
     .then(() => res.send({
       message: 'Feedback created successfully'
     }));

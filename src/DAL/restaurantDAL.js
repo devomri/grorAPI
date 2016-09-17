@@ -29,7 +29,7 @@ export const getRestaurantFullDataById = (id) => {
     const feedbacksPromise = Feedback.find({restaurantId: id},config.mongo.defaultMask);
 
     return q.all([basicDataPromise, menuPromise, feedbacksPromise])
-    .then(guardAll([`Restaurant with id: ${id} not found`], [404]))
+    .spread(guardAll([`Restaurant with id: ${id} not found`], [404]))
     .spread((basicData, menu, feedbacks) => {
         return {
             basicData,

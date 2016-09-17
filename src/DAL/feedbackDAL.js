@@ -20,7 +20,7 @@ export const insertRestaurantFeedback = (feedbackModel) => {
 
     // Check the existence of user and restaurant asynchronously
     return q.all([userPromise, restaurantPromise])
-        .then(guardAll(['User was not found, feedback won\'t be inserted', 'Restaurant was not found, feedback won\'t be inserted'], [500, 500]))
+        .spread(guardAll(['User was not found, feedback won\'t be inserted', 'Restaurant was not found, feedback won\'t be inserted']))
         .then(() => feedbackToAdd.save());
 };
 
